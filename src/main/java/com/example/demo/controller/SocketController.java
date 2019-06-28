@@ -9,23 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.TextMessage;
 
 import javax.servlet.http.HttpSession;
-import javax.websocket.*;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * @desp Socket控制器
  */
 @Controller
 public class SocketController {
-//
-    private Session session;
-    private Set<SocketController> webSocketSet = new HashSet<>();
-    private Map<Session,SocketController> webSocketMap = new HashMap<>();
-    private int size = 0;
+
     private static final Logger logger = LoggerFactory.getLogger(SocketController.class);
 
     @Bean//这个注解会从Spring容器拿出Bean
@@ -51,38 +41,6 @@ public class SocketController {
     }
 
 
-    @OnOpen
-    public void onOpen(Session session, EndpointConfig config) throws IOException, InterruptedException {
-        this.session = session;
-        webSocketSet.add(this);
-        webSocketMap.put(session,this);
-        size++;
-        logger.info("连接websocket服务器 成功......当前数量:"+size);
-    }
-
-    @OnClose
-    public void onClose(Session closeSession) {
-        webSocketSet.remove(this);
-        webSocketMap.remove(session,this);
-        size--;
-        logger.info("关闭连接websocket服务器 ......当前数量:"+size);
-    }
-    @OnMessage
-    public void onMessage(String message, Session session) {
-        logger.info("来自客户端的信息"+message);
-        for (SocketController item : webSocketSet) {
-            try {
-                item.sendMessage(message,session);
-            } catch (IOException e) {
-                e.printStackTrace();
-                continue;
-            }
-        }
-    }
-
-    public void sendMessage(String message, Session session) throws IOException {
-        session.getBasicRemote().sendText(message);
-    }
 
 
 }
