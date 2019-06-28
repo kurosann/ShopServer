@@ -18,17 +18,17 @@ public class SocketHandler extends TextWebSocketHandler {
 
     private static final ArrayList<WebSocketSession> users;//这个会出现性能问题，最好用Map来存储，key用userid
     private static Logger logger = LoggerFactory.getLogger(SocketHandler.class);
+
     static {
-        users = new ArrayList<WebSocketSession>();
+        users = new ArrayList<>();
     }
 
     /**
      * 连接成功时候，会触发页面上onopen方法
      */
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        // TODO Auto-generated method stub
         users.add(session);
-        System.out.println("connect to the websocket success......当前数量:"+users.size());
+        logger.info("connect to the websocket success......当前数量:" + users.size());
         //这块会实现自己业务，比如，当用户登录后，会把离线消息推送给用户
 //        TextMessage returnMessage = new TextMessage("你将收到的离线");
 //        session.sendMessage(returnMessage);
@@ -39,36 +39,39 @@ public class SocketHandler extends TextWebSocketHandler {
      */
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         logger.debug("websocket connection closed......");
-        String username= (String) session.getAttributes().get("WEBSOCKET_USERNAME");
-        System.out.println("用户"+username+"已退出！");
+        String username = (String) session.getAttributes().get("WEBSOCKET_USERNAME");
+        System.out.println("用户" + username + "已退出！");
         users.remove(session);
-        System.out.println("剩余在线用户"+users.size());
+        logger.info("剩余在线用户" + users.size());
     }
 
 
     /**
-     *
      * 调用websocket.send时候，会调用该方法
      */
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 
-        Msg m = new Gson().fromJson(message.getPayload(), new TypeToken<Msg>(){}.getType());
+        Msg m = new Gson().fromJson(message.getPayload(), new TypeToken<Msg>() {
+        }.getType());
         if (m.getFlag() == Msg.init) {
             session.getAttributes().computeIfAbsent("WEBSOCKET_USERNAME", k -> m.getFromUser());
         } else {
             session.getAttributes().computeIfAbsent("WEBSOCKET_USERNAME", k -> m.getFromUser());
             super.handleTextMessage(session, message);
-            logger.debug("message:"+message.getPayload().toString());
+            logger.debug("message:" + message.getPayload().toString());
             TextMessage returnMessage = new TextMessage(message.getPayload().toString());
             //session.sendMessage(returnMessage);
             //sendMessageToUser("123",returnMessage);
-            sendMessageToUser(m.getToUser(),returnMessage);
+            logger.info("来着" + m.getFromUser() + "送去" + m.getToUser() + message.getPayload());
+            sendMessageToUser(m.getToUser(), returnMessage);
         }
     }
 
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
-        if(session.isOpen()){session.close();}
+        if (session.isOpen()) {
+            session.close();
+        }
         logger.debug("websocket connection closed......");
         users.remove(session);
     }
@@ -95,7 +98,7 @@ public class SocketHandler extends TextWebSocketHandler {
                         e.printStackTrace();
                     }
                     break;
-            }
+                }
             }
 
         }
