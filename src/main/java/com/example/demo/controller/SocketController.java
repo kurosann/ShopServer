@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.socket.GetHttpSessionConfigurator;
 import com.example.demo.socket.SocketHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +10,6 @@ import org.springframework.web.socket.TextMessage;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.*;
-import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,9 +20,8 @@ import java.util.Set;
  * @desp Socket控制器
  */
 @Controller
-@ServerEndpoint(value = "/socketServer", configurator = GetHttpSessionConfigurator.class)
 public class SocketController {
-
+//
     private Session session;
     private Set<SocketController> webSocketSet = new HashSet<>();
     private Map<Session,SocketController> webSocketMap = new HashMap<>();
@@ -40,7 +37,7 @@ public class SocketController {
     @RequestMapping("/login")
     public String login(HttpSession session,String username) {
         logger.info(username + "登录建立Websocket连接");
-        session.setAttribute("username", username);
+        session.setAttribute("WEBSOCKET_USERNAME", username);
         return "home";
     }
 
