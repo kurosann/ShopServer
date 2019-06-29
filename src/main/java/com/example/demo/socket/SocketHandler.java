@@ -28,8 +28,8 @@ public class SocketHandler extends TextWebSocketHandler {
      */
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         users.add(session);
-        logger.info("connect to the websocket success......当前数量:" + users.size());
-        //这块会实现自己业务，比如，当用户登录后，会把离线消息推送给用户
+        logger.info("连接websocket成功......当前数量:" + users.size());
+        // 离线消息推送
 //        TextMessage returnMessage = new TextMessage("你将收到的离线");
 //        session.sendMessage(returnMessage);
     }
@@ -38,7 +38,7 @@ public class SocketHandler extends TextWebSocketHandler {
      * 关闭连接时触发
      */
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        logger.debug("websocket connection closed......");
+        logger.debug("websocket服务连接关闭.....");
         String username = (String) session.getAttributes().get("WEBSOCKET_USERNAME");
         users.remove(session);
         logger.info("用户" + username + "已退出！ 剩余在线用户" + users.size());
@@ -58,11 +58,11 @@ public class SocketHandler extends TextWebSocketHandler {
         } else {
             session.getAttributes().computeIfAbsent("WEBSOCKET_USERNAME", k -> m.getFromUser());
             super.handleTextMessage(session, message);
-            logger.debug("message:" + message.getPayload().toString());
-            TextMessage returnMessage = new TextMessage(message.getPayload().toString());
+            logger.debug("message:" + message.getPayload());
+            TextMessage returnMessage = new TextMessage(message.getPayload());
             //session.sendMessage(returnMessage);
             //sendMessageToUser("123",returnMessage);
-            logger.info("来着" + m.getFromUser() + "送去" + m.getToUser() + message.getPayload());
+            logger.info("来自" + m.getFromUser() + "送去" + m.getToUser() + message.getPayload());
             sendMessageToUser(m.getToUser(), returnMessage);
         }
     }
@@ -82,8 +82,8 @@ public class SocketHandler extends TextWebSocketHandler {
     /**
      * 给某个用户发送消息
      *
-     * @param userName
-     * @param message
+     * @param userName 目标用户
+     * @param message 发送的消息
      */
     public void sendMessageToUser(String userName, TextMessage message) {
         for (WebSocketSession user : users) {
@@ -127,7 +127,7 @@ public class SocketHandler extends TextWebSocketHandler {
     /**
      * 给所有在线用户发送消息
      *
-     * @param message
+     * @param message 发送的消息
      */
     public void sendMessageToUsers(TextMessage message) {
         for (WebSocketSession user : users) {
