@@ -40,9 +40,8 @@ public class SocketHandler extends TextWebSocketHandler {
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         logger.debug("websocket connection closed......");
         String username = (String) session.getAttributes().get("WEBSOCKET_USERNAME");
-        System.out.println("用户" + username + "已退出！");
         users.remove(session);
-        logger.info("剩余在线用户" + users.size());
+        logger.info("用户" + username + "已退出！ 剩余在线用户" + users.size());
     }
 
 
