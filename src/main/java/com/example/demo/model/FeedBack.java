@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 import java.util.List;
 
-public class Feedback {
+public class FeedBack {
     public static final String COL_USER_ID = "user_id";
     public static final String COL_PRODUCT_ID = "product_id";
     public static final String COL_FEEDBACK_CONTEXT = "feedback_context";
@@ -14,14 +14,14 @@ public class Feedback {
 
     private String feedbackContext;
 
-    private List<String> feedbackImage;
+    private List<FeedBackImage> feedBackImages;
 
-    public List<String> getFeedbackImage() {
-        return feedbackImage;
+    public List<FeedBackImage> getFeedBackImages() {
+        return feedBackImages;
     }
 
-    public void setFeedbackImage(List<String> feedbackImage) {
-        this.feedbackImage = feedbackImage;
+    public void setFeedBackImages(List<FeedBackImage> feedBackImages) {
+        this.feedBackImages = feedBackImages;
     }
 
     public Integer getFeedbackId() {

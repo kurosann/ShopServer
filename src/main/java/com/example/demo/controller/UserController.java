@@ -228,17 +228,9 @@ public class UserController {
             hashMap.put("RESULT", "F");
             hashMap.put("message", "用户信息无效");
             return hashMap;
-        }
-
-        UserExample userExample = new UserExample();
-        userExample.createCriteria().andUserIdEqualTo(userId);
-        List<User> users = um.selectByExample(userExample);
-        if (users.size() == 0) {
-            hashMap.put("RESULT", "F");
-            return hashMap;
         } else {
             hashMap.put("RESULT", "S");
-            hashMap.put("user", users.get(0));
+            hashMap.put("user", user);
             return hashMap;
         }
 

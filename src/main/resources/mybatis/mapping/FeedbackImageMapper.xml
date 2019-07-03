@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.FeedbackImageMapper">
-  <resultMap id="BaseResultMap" type="com.example.demo.model.FeedbackImage">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.FeedBackImage">
     <!--@mbg.generated-->
     <id column="feedback_image_id" jdbcType="INTEGER" property="feedbackImageId" />
     <result column="feedback_id" jdbcType="INTEGER" property="feedbackId" />
-    <result column="feedback_image" jdbcType="VARCHAR" property="feedbackImage" />
+    <result column="feedback_image" jdbcType="VARCHAR" property="feedBackImage" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--@mbg.generated-->
@@ -105,19 +105,19 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyColumn="feedback_image_id" keyProperty="feedbackImageId" parameterType="com.example.demo.model.FeedbackImage" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="feedback_image_id" keyProperty="feedbackImageId" parameterType="com.example.demo.model.FeedBackImage" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_feedback_image (feedback_id, feedback_image)
-    values (#{feedbackId,jdbcType=INTEGER}, #{feedbackImage,jdbcType=VARCHAR})
+    values (#{feedbackId,jdbcType=INTEGER}, #{feedBackImage,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" keyColumn="feedback_image_id" keyProperty="feedbackImageId" parameterType="com.example.demo.model.FeedbackImage" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="feedback_image_id" keyProperty="feedbackImageId" parameterType="com.example.demo.model.FeedBackImage" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_feedback_image
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="feedbackId != null">
         feedback_id,
       </if>
-      <if test="feedbackImage != null">
+      <if test="feedBackImage != null">
         feedback_image,
       </if>
     </trim>
@@ -125,8 +125,8 @@
       <if test="feedbackId != null">
         #{feedbackId,jdbcType=INTEGER},
       </if>
-      <if test="feedbackImage != null">
-        #{feedbackImage,jdbcType=VARCHAR},
+      <if test="feedBackImage != null">
+        #{feedBackImage,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -147,8 +147,8 @@
       <if test="record.feedbackId != null">
         feedback_id = #{record.feedbackId,jdbcType=INTEGER},
       </if>
-      <if test="record.feedbackImage != null">
-        feedback_image = #{record.feedbackImage,jdbcType=VARCHAR},
+      <if test="record.feedBackImage != null">
+        feedback_image = #{record.feedBackImage,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -160,29 +160,29 @@
     update tb_feedback_image
     set feedback_image_id = #{record.feedbackImageId,jdbcType=INTEGER},
       feedback_id = #{record.feedbackId,jdbcType=INTEGER},
-      feedback_image = #{record.feedbackImage,jdbcType=VARCHAR}
+      feedback_image = #{record.feedBackImage,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.FeedbackImage">
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.FeedBackImage">
     <!--@mbg.generated-->
     update tb_feedback_image
     <set>
       <if test="feedbackId != null">
         feedback_id = #{feedbackId,jdbcType=INTEGER},
       </if>
-      <if test="feedbackImage != null">
-        feedback_image = #{feedbackImage,jdbcType=VARCHAR},
+      <if test="feedBackImage != null">
+        feedback_image = #{feedBackImage,jdbcType=VARCHAR},
       </if>
     </set>
     where feedback_image_id = #{feedbackImageId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.FeedbackImage">
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.FeedBackImage">
     <!--@mbg.generated-->
     update tb_feedback_image
     set feedback_id = #{feedbackId,jdbcType=INTEGER},
-      feedback_image = #{feedbackImage,jdbcType=VARCHAR}
+      feedback_image = #{feedBackImage,jdbcType=VARCHAR}
     where feedback_image_id = #{feedbackImageId,jdbcType=INTEGER}
   </update>
 </mapper>

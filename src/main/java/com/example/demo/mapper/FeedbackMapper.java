@@ -1,6 +1,6 @@
 package com.example.demo.mapper;
 
-import com.example.demo.model.Feedback;
+import com.example.demo.model.FeedBack;
 import com.example.demo.model.FeedbackExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -12,22 +12,22 @@ public interface FeedbackMapper {
 
     int deleteByPrimaryKey(Integer feedbackId);
 
-    int insert(Feedback record);
+    int insert(FeedBack record);
 
-    int insertSelective(Feedback record);
+    int insertSelective(FeedBack record);
 
-    List<Feedback> selectByExample(FeedbackExample example);
+    List<FeedBack> selectByExample(FeedbackExample example);
 
-    Feedback selectByPrimaryKey(Integer feedbackId);
+    FeedBack selectByPrimaryKey(Integer feedbackId);
 
-    List<Feedback> selectLinkByUserId(Integer UserId);
+    List<FeedBack> selectLinkByFeedBackId(Integer UserId);
 
-    int updateByExampleSelective(@Param("record") Feedback record, @Param("example") FeedbackExample example);
+    int updateByExampleSelective(@Param("record") FeedBack record, @Param("example") FeedbackExample example);
 
-    int updateByExample(@Param("record") Feedback record, @Param("example") FeedbackExample example);
+    int updateByExample(@Param("record") FeedBack record, @Param("example") FeedbackExample example);
 
-    int updateByPrimaryKeySelective(Feedback record);
+    int updateByPrimaryKeySelective(FeedBack record);
 
-    int updateByPrimaryKey(Feedback record);
+    int updateByPrimaryKey(FeedBack record);
 
 }

@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 public class User {
     private Integer userId;
 
@@ -18,6 +20,17 @@ public class User {
     private String userHeadIcon;
 
     private Integer userDefaultAddressId;
+
+    private List<FeedBack> feedBacks;
+
+
+    public List<FeedBack> getFeedBacks() {
+        return feedBacks;
+    }
+
+    public void setFeedBacks(List<FeedBack> feedBacks) {
+        this.feedBacks = feedBacks;
+    }
 
     public Integer getUserId() {
         return userId;

@@ -1,13 +1,13 @@
 package com.example.demo.model;
 
-public class FeedbackImage {
+public class FeedBackImage {
     private Integer feedbackImageId;
 
     private Integer feedbackId;
 
-    private String feedbackImage;
+    private String feedBackImage;
 
-    public Integer getFeedbackImageId() {
+    public Integer getFeedBackImageId() {
         return feedbackImageId;
     }
 
@@ -23,11 +23,11 @@ public class FeedbackImage {
         this.feedbackId = feedbackId;
     }
 
-    public String getFeedbackImage() {
-        return feedbackImage;
+    public String getFeedBackImage() {
+        return feedBackImage;
     }
 
-    public void setFeedbackImage(String feedbackImage) {
-        this.feedbackImage = feedbackImage;
+    public void setFeedBackImage(String feedBackImage) {
+        this.feedBackImage = feedBackImage;
     }
 }

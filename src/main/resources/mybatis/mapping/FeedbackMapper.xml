@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.FeedbackMapper">
-  <resultMap id="BaseResultMap" type="com.example.demo.model.Feedback">
+  <resultMap id="BaseResultMap" type="com.example.demo.model.FeedBack">
     <!--@mbg.generated-->
     <id column="feedback_id" jdbcType="INTEGER" property="feedbackId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="feedback_context" jdbcType="VARCHAR" property="feedbackContext" />
   </resultMap>
-  <resultMap id="LinkResultMap" type="com.example.demo.model.Feedback">
+  <resultMap id="LinkResultMap" type="com.example.demo.model.FeedBack">
     <!--@mbg.generated-->
     <id column="feedback_id" jdbcType="INTEGER" property="feedbackId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="feedback_context" jdbcType="VARCHAR" property="feedbackContext" />
-    <collection property="feedbackImage" jdbcType="VARCHAR"
-                resultMap="com.example.demo.mapper.FeedbackImageMapper.BaseResultMap" column="user_id"/>
+    <collection property="feedBackImages" ofType="FeedBackImage"
+                resultMap="com.example.demo.mapper.FeedbackImageMapper.BaseResultMap" column="feedback_id"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--@mbg.generated-->
@@ -96,7 +96,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectLinkByUserId" parameterType="java.lang.Integer" resultMap="LinkResultMap">
+  <select id="selectLinkByFeedBackId" parameterType="java.lang.Integer" resultMap="LinkResultMap">
     select tb_feedback.*, tb_feedback_image.*
     from tb_feedback join tb_feedback_image on tb_feedback.feedback_id = tb_feedback_image.feedback_id
     where tb_feedback.feedback_id = #{UserId,jdbcType=INTEGER} ;
@@ -120,14 +120,14 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" keyColumn="feedback_id" keyProperty="feedbackId" parameterType="com.example.demo.model.Feedback" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="feedback_id" keyProperty="feedbackId" parameterType="com.example.demo.model.FeedBack" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_feedback (user_id, product_id, feedback_context
       )
     values (#{userId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{feedbackContext,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" keyColumn="feedback_id" keyProperty="feedbackId" parameterType="com.example.demo.model.Feedback" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="feedback_id" keyProperty="feedbackId" parameterType="com.example.demo.model.FeedBack" useGeneratedKeys="true">
     <!--@mbg.generated-->
     insert into tb_feedback
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -192,7 +192,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.Feedback">
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.model.FeedBack">
     <!--@mbg.generated-->
     update tb_feedback
     <set>
@@ -208,7 +208,7 @@
     </set>
     where feedback_id = #{feedbackId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.Feedback">
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.model.FeedBack">
     <!--@mbg.generated-->
     update tb_feedback
     set user_id = #{userId,jdbcType=INTEGER},
