@@ -37,6 +37,21 @@ public class UserController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
+    @Autowired
+    ProductTypeMapper ptm;
+
+    @RequestMapping("/get_message")
+    public HashMap<String, String> getMessage() {
+        String[] messages = {"有新的打折商品", "双十一特惠商品", "近期有%d个好友生日"};
+        messages[2] = String.format(messages[2], (int) (Math.random() * 10) + 1);
+        int i = (int) (Math.random() * 3);
+        String message = messages[i];
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("RESULT", "S");
+        hashMap.put("flag", i + "");
+        hashMap.put("message", message);
+        return hashMap;
+    }
 
     @RequestMapping("/upload")
     public String upload() {
@@ -834,6 +849,22 @@ public class UserController {
 
         hashMap.put("RESULT", "S");
         hashMap.put("queryProducts", queryProducts);
+        return hashMap;
+    }
+
+    @RequestMapping("/get_all_product_type")
+    public HashMap<String, Object> getAllProductType() {
+        ProductTypeExample productTypeExample = new ProductTypeExample();
+        List<ProductType> productTypes = ptm.selectByExample(productTypeExample);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        if (productTypes.size() > 0) {
+            hashMap.put("RESULT", "S");
+            hashMap.put("productTypes", productTypes);
+            return hashMap;
+        }
+        hashMap.put("RESULT", "F");
+        hashMap.put("message", "获取商品类型失败");
+
         return hashMap;
     }
 
