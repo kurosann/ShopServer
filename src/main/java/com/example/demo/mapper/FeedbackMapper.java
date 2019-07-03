@@ -20,7 +20,7 @@ public interface FeedbackMapper {
 
     Feedback selectByPrimaryKey(Integer feedbackId);
 
-    Feedback selectLinkByUserId(Integer UserId);
+    List<Feedback> selectLinkByUserId(Integer UserId);
 
     int updateByExampleSelective(@Param("record") Feedback record, @Param("example") FeedbackExample example);
 

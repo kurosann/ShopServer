@@ -74,7 +74,7 @@
     user_id, user_name, user_nike, user_password, user_email, user_phone, user_money, 
     user_head_icon, user_default_address_id
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.model.UserExample" >
+  <select id="selectByExample" parameterType="com.example.demo.model.UserExample" resultMap="BaseResultMap" >
     select
     <if test="distinct" >
       distinct
@@ -89,10 +89,11 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from tb_user
+    select
+    tb_user.*,tb_feedback.*
+    from tb_user,tb_feedback
     where user_id = #{userId,jdbcType=INTEGER}
+    and tb_user.user_id = tb_feedback.user_id;
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tb_user
