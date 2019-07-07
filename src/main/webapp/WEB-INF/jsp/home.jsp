@@ -41,7 +41,7 @@
         }
 
         $("#send").click(function (e) {
-            sock.send("{\"fromUser\":<%=username%>,\"toUser\":"+$("#toUser").val()+",\"message\":"+$("#messageInput").val()+"}");
+            sock.send("{\"fromUser\":\"<%=username%>\",\"toUser\":\""+$("#toUser").val()+"\",\"message\":\""+$("#messageInput").val()+"\"}");
 
         });
 
