@@ -10,6 +10,7 @@
     String path = request.getContextPath();
     String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
     String wsPath = "ws://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String username = (String) request.getSession().getAttribute("WEBSOCKET_USERNAME");
 %>
 <html>
 <head>
@@ -17,13 +18,16 @@
 </head>
 <body>
 <h1>
-    Hello world!  This is a WebSocket demo!
+    This is a WebSocket demo!
 </h1>
 <div id="message">
 </div>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/sockjs.min.js"></script>
 
+<textarea id="toUser" placeholder="请输入发送到那个人的id"></textarea>
+<textarea id="messageInput"></textarea>
+<input id="send" type="submit" value="发送">
 <script type="text/javascript">
     $(function(){
         //通过HTTP协议自动建立socket连接，服务端对"/socketServer"和"/sockjs/socketServer"进行拦截
@@ -35,6 +39,11 @@
         } else {
             sock = new SockJS("<%=basePath%>sockjs/socketServer");
         }
+
+        $("#send").click(function (e) {
+            sock.send("{\"fromUser\":<%=username%>,\"toUser\":"+$("#toUser").val()+",\"message\":"+$("#messageInput").val()+"}");
+
+        });
 
         sock.onopen = function (e) {
             console.log(e);

@@ -15,7 +15,7 @@
     <result column="product_id" jdbcType="INTEGER" property="productId" />
     <result column="feedback_context" jdbcType="VARCHAR" property="feedbackContext" />
     <collection property="feedBackImages" ofType="FeedBackImage"
-                resultMap="com.example.demo.mapper.FeedbackImageMapper.BaseResultMap" column="feedback_id"/>
+                resultMap="com.example.demo.mapper.FeedbackImageMapper.ImageResultMap" column="feedback_id"/>
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--@mbg.generated-->

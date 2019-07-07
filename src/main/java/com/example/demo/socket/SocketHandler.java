@@ -28,7 +28,7 @@ public class SocketHandler extends TextWebSocketHandler {
      */
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         users.add(session);
-        logger.info("连接websocket成功......当前数量:" + users.size());
+        logger.info("连接websocket成功......当前在线用户数量:" + users.size());
         // 离线消息推送
 //        TextMessage returnMessage = new TextMessage("你将收到的离线");
 //        session.sendMessage(returnMessage);
@@ -50,13 +50,12 @@ public class SocketHandler extends TextWebSocketHandler {
      */
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-
+        System.out.println(message.getPayload());
         Msg m = new Gson().fromJson(message.getPayload(), new TypeToken<Msg>() {
         }.getType());
         if (m.getFlag() == Msg.init) {
             session.getAttributes().computeIfAbsent("WEBSOCKET_USERNAME", k -> m.getFromUser());
         } else {
-            session.getAttributes().computeIfAbsent("WEBSOCKET_USERNAME", k -> m.getFromUser());
             super.handleTextMessage(session, message);
             logger.debug("message:" + message.getPayload());
             TextMessage returnMessage = new TextMessage(message.getPayload());

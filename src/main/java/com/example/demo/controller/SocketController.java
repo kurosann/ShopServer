@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.socket.SocketHandler;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -36,7 +37,11 @@ public class SocketController {
     public String sendMessage1(String toUser) {
         double rand = Math.ceil(Math.random() * 100);
         logger.info("信息发送给"+toUser);
-        infoHandler().sendMessageToUser(toUser, new TextMessage("Websocket测试消息" + rand));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("fromUser","server");
+        jsonObject.put("toUser","kuro");
+        jsonObject.put("message","testMessage" + rand);
+        infoHandler().sendMessageToUser(toUser, new TextMessage(jsonObject.toString()));
         return "message";
     }
 
