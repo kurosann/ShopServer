@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class SocketHandler extends TextWebSocketHandler {
 
-    private static final ArrayList<WebSocketSession> users;//这个会出现性能问题，最好用Map来存储，key用userid
+    private static final ArrayList<WebSocketSession> users;
     private static Logger logger = LoggerFactory.getLogger(SocketHandler.class);
 
     static {
